@@ -2,9 +2,9 @@ import http from 'k6/http';
 import { sleep, check } from 'k6';
 
 
-var product_id = 1;
+var product_id = 2002;
 var action = 'helpful';//or 'report'
-var review_id = 5774958;
+var review_id = 5779;
 var port = 3000;
 
 const getAllReviews = `http://localhost:${port}/reviews/${product_id}/list`;
@@ -21,23 +21,44 @@ var insertBody = {
   "email": "tom@gmail.com",
   "photos": ["https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
     "https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q="],
-  "characteristics": { "1": 3, "2": 4, "3": 2, "4": 3 }
+  "characteristics": { "3442": 3}
 };
 
 //load testing
 export let options = {
-  vus: 1,
+  vus: 100,
   duration: '10s'
 };
+//stress testing
+// export let options={
+//   stages:[
+//     {duration:'20s',target:100},
+//     {duration:'2m',target:300},
+//     {duration:'2m',target:0}
+//   ]
+// }
+// export let options={
+//   stages:[
+//     {duration:'20s',target:100},
+//     {duration:'2m',target:300},
+//     {duration:'2m',target:0}
+//   ],
+//   scenarios: {
+//     contacts: {
+//       executor: 'shared-iterations',
+//       vus: 100,
+//       iterations: 200,
+//       maxDuration: '30s',
+//     },
+//   },
+// }
 
 
 export default function () {
-  // const resReviews = http.get(getAllReviews);
+  const resReviews = http.get(getAllReviews);
   // const resMeta = http.get(getMetaData);
-  const resUpdate = http.put(updateURL,null,{header: { 'Content-Type': 'application/json' }});
-  // const resInsert = http.post(insertURL,JSON.stringify(insertBody), {
-  //   headers: { 'Content-Type': 'application/json' },
-  // });
+  // const resUpdate = http.put(updateURL);//adding header can potentially improve perfomance??
+  // const resInsert = http.post(insertURL, JSON.stringify(insertBody), { headers: { 'Content-Type': 'application/json' } });
   // sleep(1)
   var loadReviews = {
     'AllReview status was 200': r => r.status === 200,
@@ -68,9 +89,9 @@ export default function () {
     'InsertReview time< 2000ms': r => r.timings.duration < 2000
   };
 
-  // check(resReviews, loadReviews);
+  check(resReviews, loadReviews);
   // check(resMeta,loadMeta);
-  check(resUpdate,updateReview);
+  // check(resUpdate, updateReview);
   // check(resInsert,insertReview);
 }
 
@@ -105,8 +126,9 @@ export default function () {
 // //stress testing (reliablity)
 // export let options={
 //   stages:[
-//     {duration:'2m',target:100},
-//     {duration:'2m',target:200}
+//     {duration:'20s',target:100},
+//     {duration:'2m',target:300},
+//     {duration:'2m',target:0}
 //   ]
 // }
 

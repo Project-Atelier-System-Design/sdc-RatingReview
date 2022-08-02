@@ -36,7 +36,13 @@ var allReviews=(req,res)=>{
     output.page=page;
     output.count=count;
     res.json(output)
-    // res.status(200).send(output)
+  });
+
+  return client.query(queryReviews(req.params.product_id,sort,count,page)).then((result)=>{
+    var output=result.rows[0];
+    output.page=page;
+    output.count=count;
+    res.json(output)
   });
 }
 
