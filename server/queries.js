@@ -4,7 +4,7 @@ var queryReviews=(product_id,sort,count,page)=>{
   (
   select json_agg(item2)
     from(
-      select rew.reviewID, rew.rating, rew.summary, rew.recommend, rew.response, rew.body, rew.date, rew.reviewer_name, rew.helpfulness,
+      select rew.reviewID as review_id, rew.rating, rew.summary, rew.recommend, rew.response, rew.body, rew.date, rew.reviewer_name, rew.helpfulness,
       (
       select json_agg(item)
       from (
@@ -20,7 +20,7 @@ var queryReviews=(product_id,sort,count,page)=>{
   )as results
   from products prod
   where prod.productID=${product_id}
-  limit ${count} offset ${page-1}
+  limit ${count} offset ${page}
   `
 }
 
@@ -58,7 +58,8 @@ var updateHelpfulness=(review_id)=>{
   return`
     update reviews
     set helpfulness=helpfulness+1
-    where reviews.reviewID=${review_id};
+    where reviews.reviewID=${review_id}
+    returning *;
   `
 }
 var updateReport=(review_id)=>{

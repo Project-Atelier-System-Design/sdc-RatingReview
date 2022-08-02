@@ -9,14 +9,37 @@ mongoose
 let reviewSchema = mongoose.Schema({
   reviewID:{
     type:Number,
-    require:true
+    required:true
   },
   rating:Number,
   summary:String,
   recommend:Boolean,
-  charFit:Number,
-  charLen:Number,
-  charQua:Number,
+  characteristics:{
+    Size:{
+      id:Number,
+      value:Number
+    },
+    Width:{
+      id:Number,
+      value:Number
+    },
+    Fit:{
+      id:Number,
+      value:Number
+    },
+    Length:{
+      id:Number,
+      value:Number
+    },
+    Comfort:{
+      id:Number,
+      value:Number
+    },
+    Quality:{
+      id:Number,
+      value:Number
+    }
+  }
   response:String,
   body:String,
   addDate:Number,
@@ -25,6 +48,8 @@ let reviewSchema = mongoose.Schema({
   helpfulness:Number,
   report:Boolean
 })
+
+
 let reviews = mongoose.model('reviews', reviewSchema);
 
-mongoimport -d RatingReview -c reviews --type csv --headerline --file='../reviewTest1.csv'
+// mongoimport -d RatingReview -c reviews --type csv --headerline --file='../reviewTest1.csv'

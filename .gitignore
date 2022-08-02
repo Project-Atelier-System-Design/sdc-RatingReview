@@ -6,4 +6,4 @@ dataType.txt
 tempForFormat.sql
 testSchema.sql
 yarn.lock
-mongoSchema.sql
+mongoSchema.sh

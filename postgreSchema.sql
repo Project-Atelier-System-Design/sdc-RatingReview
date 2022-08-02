@@ -37,7 +37,7 @@ CREATE TABLE reviews (
 
 CREATE TABLE photos (
   photoID SERIAL PRIMARY KEY,
-  url TEXT DEFAULT NULL,
+  url TEXT,
   review_id INTEGER,
   FOREIGN KEY (review_id) REFERENCES reviews (reviewID)
 );
@@ -80,3 +80,13 @@ SELECT setval(pg_get_serial_sequence('photos', 'photoid'), (SELECT MAX(photoID) 
 SELECT setval(pg_get_serial_sequence('characteristics', 'charid'), (SELECT MAX(charid) FROM characteristics)+1);
 SELECT setval(pg_get_serial_sequence('characteristic_reviews', 'charrevid'), (SELECT MAX(charrevid) FROM characteristic_reviews)+1);
 SELECT setval(pg_get_serial_sequence('products', 'productid'), (SELECT MAX(productid) FROM products)+1);
+
+
+create index reviews_product_idx on reviews (product_id);
+
+create index photos_review_idx on photos (review_id);
+
+create index char_product_idx on characteristics (product_id);
+
+create index charRev_char_idx on characteristic_reviews (char_id);
+
