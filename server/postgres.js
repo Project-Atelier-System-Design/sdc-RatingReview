@@ -1,15 +1,15 @@
 require("dotenv").config();
-const {Client}=require('pg');
+const {Client,Pool}=require('pg');
 
 const {queryReviews,queryMetaData,updateHelpfulness,updateReport,newReview}=require('./queries.js');
 
 //build connection
 const client=new Client({
-  host:"localhost",
-  user:"admin",
-  password:'',
+  host:process.env.HOST,
+  user:`${process.env.USER}`,
+  password:`${process.env.PASSWORD}`,
   port:5432,
-  database:`ratingreview`
+  database:`${process.env.DB_NAME}`
 });
 
 client
@@ -38,12 +38,6 @@ var allReviews=(req,res)=>{
     res.json(output)
   });
 
-  return client.query(queryReviews(req.params.product_id,sort,count,page)).then((result)=>{
-    var output=result.rows[0];
-    output.page=page;
-    output.count=count;
-    res.json(output)
-  });
 }
 
 var metaReviews=(req,res)=>{

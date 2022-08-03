@@ -7,3 +7,10 @@ tempForFormat.sql
 testSchema.sql
 yarn.lock
 mongoSchema.sh
+Alderaan-RatingReview.pem
+review.pgsql
+sdc-database.pem
+sdc-server.pem
+ubuntu@18.223.113.253
+newrelic.js
+newrelic_agent.log
