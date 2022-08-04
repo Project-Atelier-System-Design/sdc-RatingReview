@@ -11,6 +11,8 @@ const app=express();
 app.use(express.json());
 app.use(cors());
 
+app.get('/loaderio-a5c9511dc9525e0dd5d92de890fbae1f.txt',(req,res)=>{res.sendFile(path.join(__dirname,'../loaderio-a5c9511dc9525e0dd5d92de890fbae1f.txt'))})
+
 app.get('/reviews/:product_id/list',controller.allReviews);
 
 app.get('/reviews/:product_id/meta',controller.metaReviews);

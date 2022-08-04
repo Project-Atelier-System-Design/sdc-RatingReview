@@ -5,9 +5,9 @@ const {queryReviews,queryMetaData,updateHelpfulness,updateReport,newReview}=requ
 
 //build connection
 const client=new Client({
-  host:process.env.HOST,
-  user:`${process.env.USER}`,
-  password:`${process.env.PASSWORD}`,
+  host:process.env.DBHOST,
+  user:`${process.env.DBUSER}`,
+  password:`${process.env.DBPASSWORD}`,
   port:5432,
   database:`${process.env.DB_NAME}`
 });
