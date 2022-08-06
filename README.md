@@ -74,7 +74,9 @@ To update a table
 
 To update a table with the info from another table
 
-```# update <tableName> set <colName>=<AnotherTable>.<anotherColName> from <AnotherTable> where <tableName>.<someColName>=<AnotherTable>.<someOtherCol>```
+```
+# update <tableName> set <colName>=<AnotherTable>.<anotherColName> from <AnotherTable> where <tableName>.<someColName>=<AnotherTable>.<someOtherCol>
+```
 
 To drop database
 
